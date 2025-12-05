@@ -5,15 +5,18 @@ info:
     A API de Portabilidade de Crédito Consignado permite que usuários transfiram suas operações de crédito e arrendamento mercantil entre instituições financeiras em busca de melhores condições para o Open Finance Brasil.
 
     # Orientações
+
     
     ## Assinatura de payloads:
       No contexto da API de Portabilidade de crédito, os payloads de mensagem que trafegam tanto por parte da instituição credora quanto por parte da instituição proponente devem estar assinados. Pbeta.1ara o processo de assinatura destes payloads as instituições devem seguir as especificações de segurança publicadas no Portal do desenvolvedor  
         &nbsp;&nbsp;- Certificados exigidos para assinatura de mensagens: [[PT] Padrão de Certificados Open Finance Brasil 2.1](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/245694518)  
         &nbsp;&nbsp;- Como assinar o payload JWS: [Como Assinar o Payload](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/905740608)
+
     
     ## Controle de Acesso
     - Os endpoints [GET] /portabilities/{portabilityId}, [GET] /portabilities/{portabilityId}/account-data, [POST] /portabilities/{portabilityId}/payment, [PATCH] / portabilities/{portabilityId}/cancel da API de Portabilidade de crédito devem utilizar o escopo client_credentials
     - Os endpoints [GET] /credit-operations/{contractId}/portability-eligibility e [POST] /portabilities devem utilizar o escopo authorization_code para validar a permissions de LOANS
+
     
     ## Validações para Portabilidade de Crédito
     **- Validações** (após o processo de DCR e obtenção de token client credential - não escopo dessa documentação):   
@@ -25,13 +28,15 @@ info:
       Validação de Claims (exceto data);   
         &emsp;- Valida se dados (aud, iss, iat e jti) são válidos - HTTP status code 403 - (`INVALID_CLIENT`);  
         &emsp;- Valida reuso de jti - HTTP Code 403 (`INVALID_CLIENT`).
+
         
     ## Validações de erros sintáticos e semânticos, previstas com retorno HTTP Code 422 - Unprocessable Entity
       **- Para todos os endpoints:**   
         &nbsp;&nbsp;**Sintáticos**   
           &emsp;- Envio de campos obrigatórios: Valida se todos os campos obrigatórios são informados (`PARAMETRO_NAO_INFORMADO`);   
           &emsp;- Formatação de parâmetros: Valida se parâmetros informados obedecem a formatação especificada (`PARAMETRO_INVALIDO`).   
-          &emsp;- Demais validações não explicitamente informadas (`NAO_INFORMADO`)   
+          &emsp;- Demais validações não explicitamente informadas (`NAO_INFORMADO`)  
+          
     **- Para endpoint ([POST] /portabilities):**   
         &nbsp;&nbsp;**Semânticos**   
         &emsp;- Portabilidade em andamento: Valida se já existe um pedido de portabilidade de crédito para o contrato solicitado pelo trilho do OFB ou da Registradora (`EM_ANDAMENTO`);   
@@ -44,12 +49,15 @@ info:
         &emsp;- Campo com preenchimento incorreto: Valida se o preenchimento de alguns campos estão corretos 
         Ex.: CNPJ da instituição credora deve ser o mesmo retornado pela API de Empréstimos (`CAMPO_INCONSISTENTE`)   
         &emsp;- Saldo devedor divergente: Valida se o preenchimento do saldo da proposta é divergente (maior ou a menor) do saldo devedor, comparado com o retornado na API de Empréstimos no instante da chamada (`VALOR_DIVERGENTE`)   
+    
     **- Para endpoint ([POST] /portabilities/{portabilityId}/payment):**   
       &nbsp;&nbsp;**Semânticos**   
         &emsp;- Estado da portabilidade diferente de `ACCEPTED_SETTLEMENT_IN_PROGRESS` ou `PAYMENT_ISSUE` (`PAGAMENTO_EFETUADO_FORA_PRAZO`). Obs.: Caso o pagamento tenha sido feito por engano a Instituição Proponente deve solicitar o estorno.   
+    
     **- Para endpoint ([PATCH] /portabilities/{portabilityId}/cancel):**   
       &nbsp;&nbsp;**Semânticos**   
         &emsp;- Estado da portabilidade diferente de `RECEIVED`, `PENDING` ou `ACCEPTED_SETTLEMENT_IN_PROGRESS` (`CANCELAMENTO_NÃO_EFETUADO`). Obs.: De acordo com o PRD o usuário poderá cancelar o pedido de portabilidade até a etapa de liquidação, após esta etapa não será mais permitido o cancelamento da portabilidade
+   
     **- Para endpoint ([POST] /portabilities/{portabilityId}/request_discharge):**   
       &nbsp;&nbsp;**Semânticos**   
         &emsp;-  Estado da portabilidade diferente de AWAITING_CONTRACT_DISCHARGE (SOLICITAÇÃO_NÃO_EFETUADA). Para relembrar a instituição credora que 
@@ -3100,4 +3108,5 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+
 
