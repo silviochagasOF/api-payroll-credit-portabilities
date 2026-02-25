@@ -2344,10 +2344,12 @@ components:
       type: string
       enum:
         -  SOLICITAÇÃO_NÃO_EFETUADA
+        - CAMPO_INCONSISTENTE
       example:  SOLICITAÇÃO_NÃO_EFETUADA
       description: |
         Códigos de erros previstos para portabilidade de crédito:
         -  SOLICITAÇÃO_NÃO_EFETUADA: A Instituição credora tem um SLA de 10 dias contados apartir da comunicação do pagamento através do endpoint [POST] /portabilities/{portabilityId}/payment para realizar desaverbar o contrato consignado de empréstimo junto ao SERPRO.
+        - CAMPO_INCONSISTENTE: CNPJ da instituição proponente não pode ser igual ao CNPJ da instituição credora.
     Meta:
       type: object
       description: Meta informações referentes à API requisitada.
