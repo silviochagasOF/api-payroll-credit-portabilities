@@ -2118,19 +2118,8 @@ components:
           minItems: 0
           description: Objeto para notificar a respeito da solicita o estorno da STR efetuada para liquidar o contrato consignado.
           required:
-            - transactionId
             - payrollData
           properties:
-              transactionId:
-                type: string
-                pattern: '^[^\s](?:.*[^\s])?$'
-                maxLength: 20
-                minLength: 1
-                example: 'STR20181108000000013'
-                description: |
-                  Identificador da transação utilizada para proponente liquidar a portabilidade de crédito com a credora.
-                  
-                  No contexto da STR0052, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)
               payrollData:
                 description: Dados do contrato de empréstimo consignado.
                 type: object
