@@ -1933,10 +1933,10 @@ components:
               description: Dados do contrato de empréstimo consignado.
               type: object
               required:
-                - contractId
+                - payrollContractNumber
                 - registeringEntity
               properties:
-                contractId:
+                payrollContractNumber:
                   type: string
                   pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,19}$'
                   maxLength: 20
